@@ -6,11 +6,15 @@ import {
 } from "@material-ui/core";
 
 import React from "react";
-import catergory from "../../data/category";
+import catergories from "../../data/category";
 
 import "./Header.css";
 
-const Header = ({ data }) => {
+const Header = ({ catergory, setCategory, word, setWord }) => {
+  const onhandleChange = (language) => {
+    setCategory(language);
+    setWord("");
+  };
   const darktheme = createTheme({
     palette: {
       primary: {
@@ -21,18 +25,26 @@ const Header = ({ data }) => {
   });
   return (
     <div className="header">
-      <span className="title">Word Hunt</span>
-      <div className="input">
+      <span className="title">{word ? word : "Word Hunt"}</span>
+      <div className="inputs">
         <ThemeProvider theme={darktheme}>
-          <TextField id="standard-basic" label="Standard" />
           <TextField
-            id="standard-select-currency"
+            className="search"
+            label="Search a Word"
+            value={word}
+            onChange={(e) => setWord(e.target.value)}
+          />
+          <TextField
+            className="select"
             select
-            label="Select"
-            helperText="Please Select the Language"
+            label="Language"
+            value={catergory}
+            onChange={(e) => onhandleChange(e.target.value)}
           >
-            {catergory.map((option) => (
-              <MenuItem>{option.value}</MenuItem>
+            {catergories.map((option) => (
+              <MenuItem key={option.label} value={option.value}>
+                {option.value}
+              </MenuItem>
             ))}
           </TextField>
         </ThemeProvider>
