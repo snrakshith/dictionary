@@ -1,6 +1,8 @@
-// import './App.css';
+import { Container } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Header from "./components/Header/Header";
+import "./App.css";
 
 function App() {
   const [meaning, setMeaning] = useState([]);
@@ -17,7 +19,14 @@ function App() {
   useEffect(() => {
     dictionaryApi();
   }, []);
-  return <div className="App">Learn</div>;
+  return (
+    <div className="app">
+      <Container maxWidth="md" className="container">
+        <Header />
+      </Container>
+      {meaning}
+    </div>
+  );
 }
 
 export default App;
