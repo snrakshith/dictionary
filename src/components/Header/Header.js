@@ -10,7 +10,7 @@ import catergories from "../../data/category";
 
 import "./Header.css";
 
-const Header = ({ catergory, setCategory, word, setWord }) => {
+const Header = ({ category, setCategory, word, setWord, LightMode }) => {
   const onhandleChange = (language) => {
     setCategory(language);
     setWord("");
@@ -18,9 +18,9 @@ const Header = ({ catergory, setCategory, word, setWord }) => {
   const darktheme = createTheme({
     palette: {
       primary: {
-        main: "#fff",
+        main: LightMode ? "#fff" : "#282f34",
       },
-      type: "dark",
+      type: LightMode ? "light" : "dark",
     },
   });
   return (
@@ -38,7 +38,7 @@ const Header = ({ catergory, setCategory, word, setWord }) => {
             className="select"
             select
             label="Language"
-            value={catergory}
+            value={category}
             onChange={(e) => onhandleChange(e.target.value)}
           >
             {catergories.map((option) => (
