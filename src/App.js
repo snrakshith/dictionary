@@ -1,23 +1,27 @@
 import { Container, Switch, withStyles } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Header from "./components/Header/Header";
 import "./App.css";
-import Definations from "./components/Definations/Definations";
-import { grey } from "@material-ui/core/colors";
+import Header from "./components/Header/Header";
+import Definitions from "./components/Definitions/Definitions";
 
 function App() {
   const [word, setWord] = useState("");
-  const [meaning, setMeaning] = useState([]);
+  const [meanings, setMeanings] = useState([]);
   const [category, setCategory] = useState("en");
   const [LightMode, setLightMode] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // if (loading) {
+  //   return <p>Data is loading...</p>;
+  // }
   // console.log(category);
   // Theme Switch
   const DarkMode = withStyles({
     switchBase: {
-      color: grey[300],
+      color: grey[50],
       "&$checked": {
-        color: grey[500],
+        color: grey[900],
       },
       "&$checked + $track": {
         backgroundColor: grey[500],
@@ -30,23 +34,24 @@ function App() {
   const dictionaryApi = async () => {
     try {
       const data = await axios.get(
-        `https://api.dictionaryapi.dev/api/v2/entries/fr/${word}`
+        // ${label}
+        `https://api.dictionaryapi.dev/api/v2/entries/${category}/${word}`
       );
-      console.log(data);
+      setMeanings(data.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     dictionaryApi();
-  }, [category, word]);
+  }, [word, category]);
   return (
     <div
       className="app"
       style={{
-        color: LightMode ? "#282f34" : "#fff",
+        color: LightMode ? "#fff" : "#282f34",
         height: "100vh",
-        backgroundColor: LightMode ? "#fff" : "#282f34",
+        backgroundColor: LightMode ? "#282f34" : "#fff",
         transition: "all .5s linear",
       }}
     >
@@ -72,7 +77,9 @@ function App() {
           setWord={setWord}
           LightMode={LightMode}
         />
-        <Definations />
+        {meanings && (
+          <Definitions word={word} meanings={meanings} LightMode={LightMode} />
+        )}
       </Container>
     </div>
   );

@@ -10,15 +10,23 @@ import catergories from "../../data/category";
 
 import "./Header.css";
 
-const Header = ({ category, setCategory, word, setWord, LightMode }) => {
-  const onhandleChange = (language) => {
-    setCategory(language);
+const Header = ({
+  category,
+  setCategory,
+  word,
+  setWord,
+  LightMode,
+  setMeanings,
+}) => {
+  const onhandleChange = (e) => {
+    setCategory(e.target.value);
     setWord("");
+    // setMeanings([]);
   };
   const darktheme = createTheme({
     palette: {
       primary: {
-        main: LightMode ? "#fff" : "#282f34",
+        main: LightMode ? "#000" : "#fff",
       },
       type: LightMode ? "light" : "dark",
     },
@@ -39,7 +47,7 @@ const Header = ({ category, setCategory, word, setWord, LightMode }) => {
             select
             label="Language"
             value={category}
-            onChange={(e) => onhandleChange(e.target.value)}
+            onChange={(e) => onhandleChange(e)}
           >
             {catergories.map((option) => (
               <MenuItem key={option.label} value={option.value}>

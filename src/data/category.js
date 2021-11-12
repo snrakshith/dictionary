@@ -1,4 +1,4 @@
-const catergory = [
+const categories = [
   { value: "English", label: "en" },
   { value: "Hindi", label: "hi" },
   { value: "Spanish", label: "es" },
@@ -13,4 +13,4 @@ const catergory = [
   { value: "Turkish", label: "tr" },
 ];
 
-export default catergory;
+export default categories;
